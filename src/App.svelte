@@ -27,8 +27,7 @@ let toggleGoLive = async () => {
   // no further action required since the DB subscription takes over
 }
 
-let setViewState = async (vs) => {
-  alert(vs);
+let setViewState = async (vs) => {  
   const { data, error } = await supabase
   .from('event')
   .update({ viewstate: vs })
