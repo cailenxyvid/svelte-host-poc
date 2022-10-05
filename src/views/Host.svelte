@@ -6,6 +6,7 @@
     // action (event) handlers
     export let toggleGoLive
     export let setViewState
+    export let resetContentItems
 
     // component props
     export let event;
@@ -16,5 +17,5 @@
     <ShowFlowNav live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
     <h1>Host View: {event.title}</h1>
 
-    <ContentList items={contentPromise}></ContentList>
+    <ContentList items={contentPromise} reloadItems={resetContentItems}></ContentList>
 </div>

@@ -1,5 +1,5 @@
 <script>
-    // action (event) handler
+    // action (event) handlers
     export let formHandler = async (event) => {
         console.error('form submit -- no submit handler set!', event)
     }

@@ -3,11 +3,13 @@
     import { newContentItem, deleteContentItem } from "../../..//db/mockAPI";
 
     // import components
-    import ContentItem from "./ContentItem.svelte";
     import FormModal from "../../shared/FormModal.svelte";
+    import ContentItem from "./ContentItem.svelte";
+    import ContentFilter from "./ContentFilter.svelte";
     
     // component props
     export let items;
+    export let reloadItems;
 
     // local props
     let showNew = false;
@@ -24,11 +26,27 @@
         newContentItem(newItem);
         showNew = false;
     }
+
+    let filterItems = async (type) => {
+        reloadItems()
+        if (type == 'all')
+            return        
+        
+        let itemList = await items;
+        items = await itemList.filter(item => item.type == type)
+    }
+
+    let searchItems = async (query) => {
+        reloadItems()
+        let itemList = await items;
+        items = await itemList.filter(item => item.title.toLowerCase().includes(query.toLowerCase()))
+    }
 </script>
 
 {#await items}
     Loading Content Items
 {:then itemList} 
+    <ContentFilter filterAction={filterItems} searchAction={searchItems} />
     {#each itemList as item}
     <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>        
     {/each}
