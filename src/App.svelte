@@ -16,6 +16,17 @@ let loadEvent = async () => {
   return data[0];
 }
 
+let loadContent = async () => {
+  const { data, error } = await supabase
+  .from('content')
+  .select()
+  .eq('event_id', 1)
+
+  if (error) throw error;
+console.log('loadContent', data)
+  return data;
+}
+
 let toggleGoLive = async () => {
   let event = await eventPromise;
 
@@ -36,18 +47,29 @@ let setViewState = async (vs) => {
   .match({ id: 1 })
 
   if (error) throw error
+  
   return data; // we don't need the data, but this returns a promise we can await on 
 }
 
+// subscribe to DB changes, results will reload corresponding promises
 supabase
   .channel('*')
-  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'event' }, payload => {
-    console.log('Change received!', payload)
+  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'event' }, payload => {    
     eventPromise = payload.new
   })
   .subscribe()
 
+supabase
+  .channel('*')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'content' }, payload => {    
+    // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead
+    contentPromise = loadContent();
+  })
+  .subscribe()  
+
+// load the initial data
 let eventPromise = loadEvent();
+let contentPromise = loadContent();
 
 </script>
 
@@ -55,6 +77,6 @@ let eventPromise = loadEvent();
   {#await eventPromise}
     <h1>loading event</h1>
   {:then event} 
-    <Host {event} {toggleGoLive} {setViewState} />
+    <Host {event} {contentPromise} {toggleGoLive} {setViewState} />
   {/await}  
 </main>
