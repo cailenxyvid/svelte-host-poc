@@ -1,7 +1,9 @@
 <script>
-import { supabase } from "./db/supabaseClient";
+  // import utilities 
+  import { supabase } from "./db/supabaseClient";
 
-import Host from './views/Host.svelte'
+  // import components
+  import Host from './views/Host.svelte'
 
 let loadEvent = async () => {
   const { data, error } = await supabase
@@ -34,7 +36,7 @@ let setViewState = async (vs) => {
   .match({ id: 1 })
 
   if (error) throw error
-  
+  return data; // we don't need the data, but this returns a promise we can await on 
 }
 
 supabase
@@ -54,10 +56,5 @@ let eventPromise = loadEvent();
     <h1>loading event</h1>
   {:then event} 
     <Host {event} {toggleGoLive} {setViewState} />
-  {/await}
-  
+  {/await}  
 </main>
-
-<style>
-
-</style>

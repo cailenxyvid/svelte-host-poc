@@ -1,8 +1,14 @@
-<script>
+<script>    
+    // import components 
+    import AsyncButton from "../../shared/AsyncButton.svelte"
+
+    // action (event) handlers
     export let setViewState
     
+    // component props
     export let state;
     export let currentState
 </script>
 
-<button on:click={() => {setViewState(state)}} class="showFlowButton {currentState == state ? 'active' : ''}">{state}</button>
+
+<AsyncButton action={setViewState} value={state} active={(state == currentState) ? true : false}>{state}</AsyncButton>
