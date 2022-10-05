@@ -1,6 +1,6 @@
 <script>
     // import utilities 
-    import { newContentItem } from "../../..//db/mockAPI";
+    import { newContentItem, deleteContentItem } from "../../..//db/mockAPI";
 
     // import components
     import ContentItem from "./ContentItem.svelte";
@@ -30,7 +30,7 @@
     Loading Content Items
 {:then itemList} 
     {#each itemList as item}
-    <ContentItem {item}></ContentItem>        
+    <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>        
     {/each}
 {/await}
 

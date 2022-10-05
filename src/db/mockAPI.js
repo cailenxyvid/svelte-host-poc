@@ -11,3 +11,14 @@ export const newContentItem = async (item) => {
 
     return data;
 }
+
+export const deleteContentItem = async (id) => {
+    const { data, error } = await supabase
+        .from('content')
+        .delete()
+        .match({ id: id })
+
+    if (error) throw error
+
+    return data;
+}
