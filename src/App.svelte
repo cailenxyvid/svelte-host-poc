@@ -23,7 +23,7 @@ let loadContent = async () => {
   .eq('event_id', 1)
 
   if (error) throw error;
-console.log('loadContent', data)
+
   return data;
 }
 
@@ -53,9 +53,9 @@ let setViewState = async (vs) => {
 
 // subscribe to DB changes, results will reload corresponding promises
 supabase
-  .channel('*')
-  .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: 'event' }, payload => {    
-    eventPromise = payload.new
+  .channel('supabase_realtime')
+  .on('postgres_changes', { event: '*', schema: 'public', table: 'event' }, payload => {    
+    eventPromise = payload.new    
   })
   .subscribe()
 

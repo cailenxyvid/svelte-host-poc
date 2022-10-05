@@ -17,11 +17,12 @@
     // component props
     export let value = true;   
     export let active = false;
+    export let classes = "";
 </script>
 
-<button on:click={(e) => { promise = handleClick(e)}} class="showFlowButton {active ? 'active' : ''}">
+<button on:click={(e) => { promise = handleClick(e)}} class="{classes} {active ? 'active' : ''}">
     {#await promise}
-        ...
+        <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
     {:then p} 
         <slot></slot>
     {/await}

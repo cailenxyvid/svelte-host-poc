@@ -1,6 +1,6 @@
 <script>
     // import utilities 
-    import { newContentItem, deleteContentItem } from "../../..//db/mockAPI";
+    import { newContentItem, deleteContentItem } from "../../../db/mockAPI";
 
     // import components
     import FormModal from "../../shared/FormModal.svelte";
@@ -13,11 +13,12 @@
 
     // local props
     let showNew = false;
+    let filterType;
 
     // local actions
     let handleNewItem = async (event) => {
         const formData = new FormData(event.target)
-        console.log('new item form', formData.get('title'))
+        
         let newItem = {
             title: formData.get('title'),
             type: formData.get('type')
@@ -28,7 +29,8 @@
     }
 
     let filterItems = async (type) => {
-        reloadItems()
+        filterType = type;
+        await reloadItems()
         if (type == 'all')
             return        
         
@@ -43,17 +45,22 @@
     }
 </script>
 
-{#await items}
-    Loading Content Items
-{:then itemList} 
-    <ContentFilter filterAction={filterItems} searchAction={searchItems} />
-    {#each itemList as item}
-    <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>        
-    {/each}
-{/await}
+<div class="contentList">    
+    <div class="contentListTools">        
+        <button on:click={() => { showNew = true }}>
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+            New Item
+        </button>
+        <ContentFilter filterAction={filterItems} searchAction={searchItems} activeType={filterType} />
+    </div>
+    {#await items}
+    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+    {:then itemList}         
+        {#each itemList as item}
+        <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>        
+        {/each}
+    {/await}
 
-<div class="contentListTools">
-    <button on:click={() => { showNew = true }}>New Item</button>
 </div>
 
 {#if showNew}

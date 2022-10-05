@@ -1,4 +1,7 @@
 <script>
+    // import components
+    import ContentItemActions from "./ContentItemActions.svelte";
+
     // component actions
     export let deleteItem
 
@@ -8,7 +11,5 @@
 
 <li class="contentItem">
     <span>{item.title}</span>
-    <div class="actions">
-        <span on:click={() => { deleteItem(item.id) }}>(X)</span>
-    </div>
+    <ContentItemActions {item} {deleteItem}></ContentItemActions>
 </li>

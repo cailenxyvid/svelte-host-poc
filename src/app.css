@@ -1,7 +1,69 @@
 .host {
-  color: red;
+  color: #666;
+  margin-top: 3rem;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .active {
   background-color: red;
+}
+
+.showflowNav {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  height: 2rem;
+  padding: 0rem 1rem;
+  background-color: #ddd;
+}
+
+.showflowNav button {
+  height: 100%;
+  width: 2rem;
+}
+
+.showflowNav .goLiveButton {
+  width: 5rem;
+}
+
+.contentList {
+  position: absolute;
+  right: 0px;
+  top: 2rem;
+  width: 18rem;
+  background-color: #eee;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+.contentList li  {
+  list-style: none;
+}
+
+.contentList .fa-refresh {
+  margin-top: 25%;
+  margin-left: 25%;
+}
+
+.contentListTools {
+  background-color: #ddd;
+  padding: .5rem;
+}
+
+.contentListTools button {
+  background-color: rgb(66, 167, 66);
+  margin-bottom: 1rem;
+}
+
+.contentFilter span {
+  border: 1px solid #666;
+  border-bottom: none;
+  padding: 5px;
+}
+
+.contentItem {
+  border-bottom: 1px solid #555;
+  padding: .25rem;
+  margin-top: 1rem;
 }

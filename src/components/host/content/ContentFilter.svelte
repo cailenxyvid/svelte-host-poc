@@ -1,12 +1,19 @@
 <script>
+    // import components
+    import ContentFilterTab from "./ContentFilterTab.svelte"
+
     // component actions
     export let filterAction
     export let searchAction
+    export let activeType
 </script>
 
 <div class="contentFilter">
-    <span on:click={() => { filterAction('all') }} class="contentTypeTab">All</span>
-    <span on:click={() => { filterAction('word') }} class="contentTypeTab">Doc</span>
-    <span on:click={() => { filterAction('poll') }} class="contentTypeTab">Poll</span>
+    <ContentFilterTab {filterAction} {activeType} type="all" label="All" />
+    <ContentFilterTab {filterAction} {activeType} type="word" label="Doc" />
+    <ContentFilterTab {filterAction} {activeType} type="poll" label="Poll" />
+    <ContentFilterTab {filterAction} {activeType} type="quiz" label="Quiz" />
+    <ContentFilterTab {filterAction} {activeType} type="slidedeck" label="Slide" />
+    
     <input type="text" on:change={ searchAction(this.value) } />
 </div>

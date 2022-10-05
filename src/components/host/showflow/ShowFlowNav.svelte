@@ -1,6 +1,6 @@
 <script>
     // import components
-    import ShowFlowButton from "./ShowFlowButtonOld.svelte";
+    import ShowFlowButton from "./ShowFlowButton.svelte";
     import AsyncButton from "../../shared/AsyncButton.svelte";
 
     // action handlers
@@ -13,7 +13,7 @@
 </script>
 
 <div class="showflowNav">    
-    <AsyncButton action={toggleGoLive} active={live}>Go live</AsyncButton>
+    <AsyncButton action={toggleGoLive} active={live} classes="goLiveButton">Go live</AsyncButton>
     <ShowFlowButton state="VS" {currentState} {setViewState} />
     <ShowFlowButton state="vS" {currentState} {setViewState} />
     <ShowFlowButton state="Vs" {currentState} {setViewState} />
