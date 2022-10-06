@@ -1,15 +1,20 @@
 <script>
     // import components
-    import ShowFlowButton from "./ShowFlowButton.svelte";
-    import AsyncButton from "../../shared/AsyncButton.svelte";
+    import ShowFlowButton from "./ShowFlowButton.svelte"
+    import ShowFlowEditorDrawer from "./ShowFlowEditorDrawer.svelte"
+    import AsyncButton from "../../shared/AsyncButton.svelte"
+    import ToggleButton from "../../shared/ToggleButton.svelte"
 
     // action handlers
     export let toggleGoLive
-    export let setViewState;
+    export let setViewState
 
     // component props - passed from event "model" in host component 
-    export let live;
-    export let currentState;
+    export let live
+    export let currentState
+
+    // local props
+    let showFlowEditor = false
 </script>
 
 <div class="showflowNav">    
@@ -22,4 +27,7 @@
     <ShowFlowButton state="SV" {currentState} {setViewState} />
     <ShowFlowButton state="V" {currentState} {setViewState} />
     <ShowFlowButton state="S" {currentState} {setViewState} />
+
+    <ToggleButton toggle={() => { showFlowEditor = !showFlowEditor }} icon="th-large"></ToggleButton>
+    {#if showFlowEditor}<ShowFlowEditorDrawer></ShowFlowEditorDrawer>{/if}
 </div>

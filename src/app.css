@@ -27,6 +27,18 @@
   width: 5rem;
 }
 
+.showFlowEditorDrawer {
+  position: absolute;
+  top: 2rem;
+  left: 25rem;
+  background-color: #ccc;
+  padding: 3px;
+  border-radius: 3px;
+  border: 1px solid #bbb;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .contentList {
   position: absolute;
   right: 0px;
@@ -117,4 +129,13 @@
 
 .modal .actions .cancel {
   background-color: red;
+}
+
+.accordion .header {
+  color:rgb(66, 167, 66)
+}
+
+.showFlowEditor {
+  background-color: #bbb;
+  width: 15rem;
 }
