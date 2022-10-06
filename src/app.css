@@ -46,6 +46,18 @@
   margin-left: 25%;
 }
 
+.contentList .active {
+  background-color: rgb(246, 183, 183);
+}
+
+.contentList .active .fa-play {
+  color: rgb(66, 167, 66);
+}
+
+.contentList .fa-trash {
+  color: red;
+}
+
 .contentListTools {
   background-color: #ddd;
   padding: .5rem;
@@ -60,10 +72,49 @@
   border: 1px solid #666;
   border-bottom: none;
   padding: 5px;
+  cursor: pointer;
+}
+
+.contentFilter .active {
+  background-color: rgb(116, 169, 116);
+  color: #eee;
 }
 
 .contentItem {
   border-bottom: 1px solid #555;
   padding: .25rem;
   margin-top: 1rem;
+}
+
+.contentItem .actions {
+  text-align: right;
+}
+
+.modal {
+  position: absolute;
+  z-index: 10;
+  right: 20%;
+  left: 20%;
+  top: 20%;
+  bottom: 20%;
+  border: 2px solid #555;
+  border-radius: 5px;
+  background-color: #eee;
+  text-align: center;
+  vertical-align: middle;
+  padding-top: 10rem;
+}
+
+.modal .actions {
+  position: absolute;
+  bottom: 5rem;
+  left: 15rem;
+}
+
+.modal .actions button {
+  background-color: rgb(66, 167, 66);
+}
+
+.modal .actions .cancel {
+  background-color: red;
 }

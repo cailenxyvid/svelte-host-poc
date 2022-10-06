@@ -1,8 +1,18 @@
 <script>
+    import { updateContentItem } from "../../../db/mockAPI";
+    import ContentItemActionIcon from "./ContentItemActionIcon.svelte"
+
     export let deleteItem
     
     export let item
+
+    let setActive = () => {
+        item.active = !item.active
+        updateContentItem(item)
+    }
 </script>
+
 <div class="actions">
-    <span on:click={() => { deleteItem(item.id) }}><i class="fa fa-trash" aria-hidden="true"></i></span>
+    <ContentItemActionIcon action={setActive} icon="play" />
+    <ContentItemActionIcon action={ () => { deleteItem(item.id) } } icon="trash" />
 </div>

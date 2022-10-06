@@ -13,7 +13,7 @@
 
     // local props
     let showNew = false;
-    let filterType;
+    let filterType = "all";
 
     // local actions
     let handleNewItem = async (event) => {
@@ -39,7 +39,7 @@
     }
 
     let searchItems = async (query) => {
-        reloadItems()
+        await reloadItems()
         let itemList = await items;
         items = await itemList.filter(item => item.title.toLowerCase().includes(query.toLowerCase()))
     }

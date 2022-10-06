@@ -9,7 +9,7 @@
     export let item
 </script>
 
-<li class="contentItem">
+<li class="contentItem {item.active ? 'active' : ''}">
     <span>{item.title}</span>
     <ContentItemActions {item} {deleteItem}></ContentItemActions>
 </li>

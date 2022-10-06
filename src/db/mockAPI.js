@@ -22,3 +22,14 @@ export const deleteContentItem = async (id) => {
 
     return data;
 }
+
+export const updateContentItem = async (item) => {
+    const { data, error } = await supabase
+        .from('content')
+        .update(item)
+        .match({ id: item.id })
+
+    if (error) throw error
+
+    return data;
+}

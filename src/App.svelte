@@ -21,6 +21,7 @@ let loadContent = async () => {
   .from('content')
   .select()
   .eq('event_id', 1)
+  .order('id')
 
   if (error) throw error;
 

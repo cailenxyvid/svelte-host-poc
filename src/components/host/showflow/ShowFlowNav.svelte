@@ -14,7 +14,12 @@
 
 <div class="showflowNav">    
     <AsyncButton action={toggleGoLive} active={live} classes="goLiveButton">Go live</AsyncButton>
-    <ShowFlowButton state="VS" {currentState} {setViewState} />
     <ShowFlowButton state="vS" {currentState} {setViewState} />
+    <ShowFlowButton state="Sv" {currentState} {setViewState} />
     <ShowFlowButton state="Vs" {currentState} {setViewState} />
+    <ShowFlowButton state="sV" {currentState} {setViewState} />
+    <ShowFlowButton state="VS" {currentState} {setViewState} />
+    <ShowFlowButton state="SV" {currentState} {setViewState} />
+    <ShowFlowButton state="V" {currentState} {setViewState} />
+    <ShowFlowButton state="S" {currentState} {setViewState} />
 </div>
