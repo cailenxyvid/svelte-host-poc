@@ -10,6 +10,7 @@
 </script>
 
 <li class="contentItem {item.active ? 'active' : ''}">
-    <span>{item.title}</span>
+    <b>{item.id}</b> <span>{item.title}</span>
     <ContentItemActions {item} {deleteItem}></ContentItemActions>
+    {item.active} {item.sort}
 </li>

@@ -1,32 +1,12 @@
 <script>
   // import utilities 
   import { supabase } from "./db/supabaseClient";
+  import { loadEvent, loadContent } from "./db/mockAPI";
+
 
   // import components
-  import Host from './views/Host.svelte'
+  import Host from './components/Host/Host.svelte'
 
-let loadEvent = async () => {
-  const { data, error } = await supabase
-  .from('event')
-  .select()
-  .eq('id', 1)
-
-  if (error) throw error;
-
-  return data[0];
-}
-
-let loadContent = async () => {
-  const { data, error } = await supabase
-  .from('content')
-  .select()
-  .eq('event_id', 1)
-  .order('id')
-
-  if (error) throw error;
-
-  return data;
-}
 
 let toggleGoLive = async () => {
   let event = await eventPromise;

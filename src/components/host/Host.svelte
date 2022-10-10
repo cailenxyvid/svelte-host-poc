@@ -3,12 +3,13 @@
     import { setContext, getContext } from 'svelte'
 
     // import stores
-    import { openPanels } from '../db/stores'
+    import { openPanels } from '../../db/stores'
 
     // import components
-    import ShowFlowNav from "../components/host/showflow/ShowFlowNav.svelte"
-    import ContentList from "../components/host/content/ContentList.svelte"
-    import ShowFlowEditor from '../components/host/showflow/ShowFlowEditor.svelte';
+    import ShowFlowNav from "./ShowFlow/ShowFlow.svelte"
+    import ShowFlowEditor from './ShowFlow/ShowFlowEditor.svelte';
+    import ContentList from "../shared/ContentTool/ContentList.svelte"
+    
 
     // action (event) handlers
     export let toggleGoLive

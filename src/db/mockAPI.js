@@ -33,3 +33,27 @@ export const updateContentItem = async (item) => {
 
     return data;
 }
+
+export let loadEvent = async () => {
+    const { data, error } = await supabase
+    .from('event')
+    .select()
+    .eq('id', 1)
+  
+    if (error) throw error;
+  
+    return data[0];
+  }
+  
+  export let loadContent = async () => {
+    const { data, error } = await supabase
+    .from('content')
+    .select()
+    .eq('event_id', 1)
+    .order('active', { ascending: false })
+    
+  
+    if (error) throw error;
+  
+    return data;
+  }
