@@ -14,6 +14,7 @@
     "vite": "^3.1.0"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.0.0-rc.10"
+    "@supabase/supabase-js": "^2.0.0-rc.10",
+    "svelte-spa-router": "^3.3.0"
   }
 }
