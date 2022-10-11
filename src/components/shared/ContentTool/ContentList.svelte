@@ -3,7 +3,7 @@
     import { newContentItem, deleteContentItem } from "../../../db/mockAPI";
 
     // import components
-    import FormModal from "../../shared/FormModal.svelte";
+    import FormModal from "../FormModal.svelte";
     import ContentItem from "./ContentItem.svelte";
     import ContentFilter from "./ContentFilter.svelte";
     
