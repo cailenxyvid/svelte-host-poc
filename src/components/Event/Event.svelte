@@ -9,19 +9,22 @@
     // router params
     export let params = {}
 
+    // local vars
+    let activeEvent = params.id
+
     // subscribe to DB changes, results will reload corresponding promises
     supabase
-    .channel('supabase_realtime')
+    .channel('public:countries:id=eq.'+activeEvent)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'event' }, payload => {    
         eventPromise = payload.new    
     })
     .subscribe()
 
     supabase
-    .channel('*')
+    .channel('public:conten:event=eq.'+activeEvent)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'content' }, payload => {    
         // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead
-        contentPromise = loadContent();
+        contentPromise = loadContent(activeEvent);
     })
     .subscribe()  
 
@@ -32,7 +35,7 @@
     const { data, error } = await supabase
     .from('event')
     .update({ live: !event.live })
-    .match({ id: 1 })
+    .match({ id: activeEvent })
 
     if (error) throw error
 
@@ -43,7 +46,7 @@
     const { data, error } = await supabase
     .from('event')
     .update({ viewstate: vs })
-    .match({ id: 1 })
+    .match({ id: activeEvent })
 
     if (error) throw error
 
@@ -52,8 +55,8 @@
     
 
     // load the initial data
-    let eventPromise = loadEvent();
-    let contentPromise = loadContent();
+    let eventPromise = loadEvent(activeEvent);
+    let contentPromise = loadContent(activeEvent);
 
 
 </script>
@@ -62,5 +65,5 @@
 {#await eventPromise}
 <h1>loading event</h1>
 {:then event} 
-<Host {event} {contentPromise} {toggleGoLive} {setViewState} resetContentItems={() => { contentPromise = loadContent() }} />
+<Host {event} {contentPromise} {toggleGoLive} {setViewState} resetContentItems={() => { contentPromise = loadContent(params.id) }} />
 {/await}  

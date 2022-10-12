@@ -4,7 +4,7 @@ export const newContentItem = async (item) => {
     const { data, error } = await supabase
         .from('content')
         .insert([
-            { title: item.title, event_id: 1 }
+            { title: item.title, event_id: item.event_id }
         ])
 
     if (error) throw error
@@ -34,22 +34,22 @@ export const updateContentItem = async (item) => {
     return data;
 }
 
-export let loadEvent = async () => {
+export let loadEvent = async (event_id) => {
     const { data, error } = await supabase
     .from('event')
     .select()
-    .eq('id', 1)
+    .eq('id', event_id)
   
     if (error) throw error;
   
     return data[0];
   }
   
-  export let loadContent = async () => {
+  export let loadContent = async (event_id) => {
     const { data, error } = await supabase
     .from('content')
     .select()
-    .eq('event_id', 1)
+    .eq('event_id', event_id)
     .order('active', { ascending: false })
     
   

@@ -8,7 +8,7 @@
     // import components
     import ShowFlowNav from "./ShowFlow/ShowFlow.svelte"
     import ShowFlowEditor from './ShowFlow/ShowFlowEditor.svelte';
-    import ContentList from "../shared/ContentTool/ContentList.svelte"
+    import ContentTool from "../shared/ContentTool/ContentTool.svelte"
     
 
     // action (event) handlers
@@ -29,5 +29,5 @@
     {#if $openPanels.showFlowEditor}
         <ShowFlowEditor />
     {/if}
-    <ContentList items={contentPromise} reloadItems={resetContentItems}></ContentList>
+    <ContentTool items={contentPromise} reloadItems={resetContentItems} activeEvent={event.id}></ContentTool>
 </div>

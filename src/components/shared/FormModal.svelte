@@ -10,6 +10,7 @@
 <div class="modal">
     <form on:submit|preventDefault={formHandler}>
         <slot></slot>
+        
         <div class="actions">
             <button on:click={close} class="cancel">Cancel</button>
             <button type="submit">Save</button>

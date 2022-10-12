@@ -114,13 +114,11 @@
   background-color: #eee;
   text-align: center;
   vertical-align: middle;
-  padding-top: 10rem;
+  padding-top: 8%;
 }
 
 .modal .actions {
-  position: absolute;
-  bottom: 5rem;
-  left: 15rem;
+  margin: 1rem;
 }
 
 .modal .actions button {

@@ -10,18 +10,21 @@
     // component props
     export let items;
     export let reloadItems;
+    export let activeEvent; //# should probably be using context API for this
 
     // local props
     let showNew = false;
     let filterType = "all";
 
     // local actions
+    //# these could be moved to a lib for cleanliness
     let handleNewItem = async (event) => {
         const formData = new FormData(event.target)
         
         let newItem = {
             title: formData.get('title'),
-            type: formData.get('type')
+            type: formData.get('type'),
+            event_id: activeEvent
         }
 
         newContentItem(newItem);
