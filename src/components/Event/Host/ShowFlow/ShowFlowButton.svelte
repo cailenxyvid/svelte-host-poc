@@ -1,6 +1,6 @@
 <script>    
     // import components 
-    import AsyncButton from "../../shared/AsyncButton.svelte"
+    import AsyncButton from "../../../shared/AsyncButton.svelte"
 
     // action (event) handlers
     export let setViewState

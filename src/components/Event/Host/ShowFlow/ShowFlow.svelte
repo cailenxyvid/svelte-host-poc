@@ -2,8 +2,8 @@
     // import components
     import ShowFlowButton from "./ShowFlowButton.svelte"
     import ShowFlowEditorDrawer from "./ShowFlowEditorDrawer.svelte"
-    import AsyncButton from "../../shared/AsyncButton.svelte"
-    import ToggleButton from "../../shared/ToggleButton.svelte"
+    import AsyncButton from "../../../shared/AsyncButton.svelte"
+    import ToggleButton from "../../../shared/ToggleButton.svelte"
 
     // action handlers
     export let toggleGoLive

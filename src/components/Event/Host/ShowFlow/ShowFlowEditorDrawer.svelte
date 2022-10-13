@@ -1,5 +1,5 @@
 <script>
-    import { openPanels } from '../../../db/stores.js'
+    import { openPanels } from '../../../../db/stores.js'
 </script>
 
 <div class="showFlowEditorDrawer">

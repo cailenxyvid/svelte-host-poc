@@ -1,16 +1,21 @@
 <script>
+    // framework tools
+    import { onMount } from 'svelte'
+
     // import utilities     
-    import { supabase } from "../../db/supabaseClient";
-    import { loadEvent, loadContent } from "../../db/mockAPI";
+    import { supabase } from "../../db/supabaseClient"
+    import { loadEvent, loadContent } from "../../db/mockAPI"
 
     // import components
-    import Host from "../Host/Host.svelte"
+    import Host from "./Host/Host.svelte"
     
     // router params
     export let params = {}
 
     // local vars
-    let activeEvent = params.id
+    let activeEvent = params.id    
+    let eventPromise 
+    let contentPromise 
 
     // subscribe to DB changes, results will reload corresponding promises
     supabase
@@ -53,17 +58,25 @@
     return data; // we don't need the data (because of subscription), but this returns a promise we can await on 
     }
     
-
     // load the initial data
-    let eventPromise = loadEvent(activeEvent);
-    let contentPromise = loadContent(activeEvent);
-
+    //# reactive statement used to update component when route params change. could use {#key} instead. or another pattern?
+    //# this might change entirely with state management anyway
+    $: if (activeEvent = params.id) {        
+        eventPromise = loadEvent(activeEvent);
+        contentPromise = loadContent(activeEvent);
+    }
 
 </script>
 <h1>hello from Event {params.id}</h1>
 
 {#await eventPromise}
-<h1>loading event</h1>
+    <h1>loading event</h1>
 {:then event} 
-<Host {event} {contentPromise} {toggleGoLive} {setViewState} resetContentItems={() => { contentPromise = loadContent(params.id) }} />
+    {#if event}
+        <Host {event} {contentPromise} {toggleGoLive} {setViewState} resetContentItems={() => { contentPromise = loadContent(params.id) }} />
+    {:else}
+        <h1>Event not found</h1>
+    {/if}
+{:catch error}
+    <p style="color: red">{error.message}</p>    
 {/await}  

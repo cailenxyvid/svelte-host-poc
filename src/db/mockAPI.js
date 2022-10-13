@@ -40,7 +40,7 @@ export let loadEvent = async (event_id) => {
     .select()
     .eq('id', event_id)
   
-    if (error) throw error;
+    if (error) return error;
   
     return data[0];
   }

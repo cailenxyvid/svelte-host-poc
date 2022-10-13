@@ -1,5 +1,5 @@
 <script>
-    import Accordion from "../../shared/Accordion.svelte"
+    import Accordion from "../../../shared/Accordion.svelte"
 </script>
 
 <div class="showFlowEditor">

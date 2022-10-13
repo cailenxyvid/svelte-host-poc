@@ -1,14 +1,15 @@
 <script>
     // import utilities
     import { setContext, getContext } from 'svelte'
+    import { fade } from 'svelte/transition'
 
     // import stores
-    import { openPanels } from '../../db/stores'
+    import { openPanels } from '../../../db/stores'
 
     // import components
     import ShowFlowNav from "./ShowFlow/ShowFlow.svelte"
     import ShowFlowEditor from './ShowFlow/ShowFlowEditor.svelte';
-    import ContentTool from "../shared/ContentTool/ContentTool.svelte"
+    import ContentTool from "../../shared/ContentTool/ContentTool.svelte"
     
 
     // action (event) handlers
@@ -22,7 +23,7 @@
     
 </script>
 
-<div class="view host">
+<div transition:fade class="view host">
     <ShowFlowNav live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
     <h1>Host View New: {event.title}</h1>
 
