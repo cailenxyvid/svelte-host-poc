@@ -9,6 +9,7 @@
 </script>
 
 <div class="contentFilter">
+    <ContentFilterTab {filterAction} {activeType} type="active" label="Active" />
     <ContentFilterTab {filterAction} {activeType} type="all" label="All" />
     <ContentFilterTab {filterAction} {activeType} type="word" label="Doc" />
     <ContentFilterTab {filterAction} {activeType} type="poll" label="Poll" />

@@ -3,42 +3,75 @@
 
 import { writable } from 'svelte/store'
 import { supabase } from "../supabaseClient"
-import { loadContent } from "../mockAPI"
+import { loadContent, newContentItem, deleteContentItem } from "../mockAPI"
 
 const store = writable({
     dirty: true,
     event_id: null,
-    items: []
+    items: [],
+    errors: []
 })
 
-// only directly expose create function - returns custom store with actions and data
-// we need event_id to populate data and subscribe to DB, so we only create a store when explicitly called 
 export const loadStore = async (event_id) => {
     let items = await loadContent(event_id)
-    store.set({dirty: false, event_id: event_id, items: items})
+    
+    store.update(store => {
+        store.dirty = false
+        store.items = items
+        return store;
+    })  
 
     // subscribe to DB updates
     supabase
     .channel('public:conten:event=eq.'+event_id)
     .on('postgres_changes', { event: '*', schema: 'public', table: 'content' }, async payload => {    
-        // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead
+        // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead (for now)
+        store.update(store => {
+            store.dirty = true
+            return store;
+        })
         let newItems = await loadContent(event_id)
-        store.set({dirty: false, event_id: event_id, items: newItems})
-        console.log('db change detected for content items')
+        
+        store.update(store => {
+            store.dirty = false
+            store.items = newItems
+            return store;
+        })  
+        
     })
     .subscribe() 
 
 }
 
-const setEvent = (event_id) => {
-    //# this is probably bad. the store should be destroyed and recreated when changing events (?)
+const addItem = (item) => {
+    //# do some validation and error handling - probably better to throw the error and let the consumer handle / display (?)
+    newContentItem(item).catch(handleError)
 }
 
-const addItem = (item) => {
-    console.log('contentStore setOne')
+const deleteItem = (id) => {
+    //# do some validation / permissions etc 
+    let t = deleteContentItem(id).catch(handleError)
+}
+
+const handleError = (error) => {
+    console.error(error)
+    store.update(store => {
+        store.errors = [...store.errors, error]
+        return store
+    })
+    
+    // clear each error after a while. probably not the best way to do this, but good UX to do something
+    setTimeout(() => {
+        store.update(store => {
+            store.errors = [...store.errors.slice(1,store.errors.length)]
+            return store
+        })  
+    }, 5000)
 }
 
 export const contentStore = {
     subscribe: store.subscribe,
-    addItem: addItem
+    set: store.set,
+    addItem: addItem,
+    deleteItem: deleteItem
 }

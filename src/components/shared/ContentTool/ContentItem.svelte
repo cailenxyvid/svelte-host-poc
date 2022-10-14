@@ -1,4 +1,7 @@
 <script>
+    // import framework tools
+    import { fly } from 'svelte/transition'
+
     // import components
     import ContentItemActions from "./ContentItemActions.svelte";
 
@@ -9,7 +12,7 @@
     export let item
 </script>
 
-<li class="contentItem {item.active ? 'active' : ''}">
+<li transition:fly={{ duration: 800}} class="contentItem {item.active ? 'active' : ''}">
     <b>{item.id}</b> <span>{item.title}</span>
     <ContentItemActions {item} {deleteItem}></ContentItemActions>
     {item.active} {item.sort}

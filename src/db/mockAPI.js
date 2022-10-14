@@ -2,25 +2,31 @@ import { supabase } from "./supabaseClient";
 
 export const newContentItem = async (item) => {
     const { data, error } = await supabase
-        .from('content')
+        .from('contevnt')
         .insert([
             { title: item.title, event_id: item.event_id }
         ])
 
-    if (error) throw error
+    if (error) {
+        console.error("Error creating content item", error)
+        throw new Error("Unable to add new content item!")        
+    }
 
     return data;
 }
 
 export const deleteContentItem = async (id) => {
-    const { data, error } = await supabase
+    const { status, error } = await supabase
         .from('content')
         .delete()
         .match({ id: id })
 
-    if (error) throw error
-
-    return data;
+    if (error) {
+        console.error("Error deleting content item", error)
+        throw new Error("Unable to delete content item ("+id+")!")        
+    }
+    
+    return status;
 }
 
 export const updateContentItem = async (item) => {
@@ -29,7 +35,10 @@ export const updateContentItem = async (item) => {
         .update(item)
         .match({ id: item.id })
 
-    if (error) throw error
+    if (error) {
+        console.error("Error updating content item", error)
+        throw new Error("Unable to update content item ("+item.title+")!")        
+    }
 
     return data;
 }
@@ -50,7 +59,7 @@ export let loadEvent = async (event_id) => {
     .from('content')
     .select()
     .eq('event_id', event_id)
-    .order('active', { ascending: false })
+    .order('id', { ascending: true })
     
   
     if (error) throw error;

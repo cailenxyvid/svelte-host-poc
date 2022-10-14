@@ -1,6 +1,6 @@
 <script>
     // import utilities
-    import { setContext, getContext } from 'svelte'
+    // import { setContext, getContext } from 'svelte'
     import { fade } from 'svelte/transition'
 
     // import stores
@@ -8,18 +8,16 @@
 
     // import components
     import ShowFlowNav from "./ShowFlow/ShowFlow.svelte"
-    import ShowFlowEditor from './ShowFlow/ShowFlowEditor.svelte';
+    import ShowFlowEditor from './ShowFlow/ShowFlowEditor.svelte'
     import ContentTool from "../../shared/ContentTool/ContentTool.svelte"
     
 
     // action (event) handlers
     export let toggleGoLive
     export let setViewState
-    export let resetContentItems
 
     // component props
     export let event
-    export let contentPromise
     
 </script>
 
@@ -30,5 +28,5 @@
     {#if $openPanels.showFlowEditor}
         <ShowFlowEditor />
     {/if}
-    <ContentTool items={contentPromise} reloadItems={resetContentItems} activeEvent={event.id}></ContentTool>
+    <ContentTool activeEvent={event.id}></ContentTool>
 </div>

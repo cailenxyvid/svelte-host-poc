@@ -1,21 +1,20 @@
 <script>
-    // import utilities 
-    import { newContentItem, deleteContentItem } from "../../../db/mockAPI";
-
     // import store
     import { loadStore, contentStore } from "../../../db/stores/contentState";
 
     // import components
     import FormModal from "../FormModal.svelte";
+    import Loader from "../Loader.svelte";
+    import DataUpdateIndicator from "../DataUpdateIndicator.svelte";
+    import NewItemButton from "../NewItemButton.svelte";
+    import ErrorItem from "../ErrorItem.svelte";
     import ContentItem from "./ContentItem.svelte";
     import ContentFilter from "./ContentFilter.svelte";
     
-    // component props
-    export let items;
-    export let reloadItems;
+    // component props    
     export let activeEvent; //# should probably be using context API for this
 
-    // data/state
+    // initial data/state
     let loadingContent = loadStore(activeEvent);
 
     // local props
@@ -24,6 +23,10 @@
 
     // local actions
     //# these could be moved to a lib for cleanliness
+    let reloadItems = async () => {
+        return loadingContent = loadStore(activeEvent)
+    }
+    
     let handleNewItem = async (event) => {
         const formData = new FormData(event.target)
         
@@ -32,56 +35,62 @@
             type: formData.get('type'),
             event_id: activeEvent
         }
-
-        // newContentItem(newItem);
-        ;(await contentStore).addItem(newItem)
+        
+        contentStore.addItem(newItem)
         showNew = false;
+    }
+
+    let handleDeleteItem = (id) => {
+        try {
+            contentStore.deleteItem(id)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     let filterItems = async (type) => {
         filterType = type;
         await reloadItems()
         if (type == 'all')
-            return        
+            return
+        if (type == 'active') {
+            $contentStore.items =  $contentStore.items.filter(item => item.active)    
+            return
+        }                
         
-        let itemList = await items;
-        items = await itemList.filter(item => item.type == type)
+        $contentStore.items =  $contentStore.items.filter(item => item.type == type)
     }
 
     let searchItems = async (query) => {
         await reloadItems()
-        let itemList = await items;
-        items = await itemList.filter(item => item.title.toLowerCase().includes(query.toLowerCase()))
+        
+        $contentStore.items =  $contentStore.items.filter(item => item.title.toLowerCase().includes(query.toLowerCase()))
     }
 </script>
 
 <div class="contentList">    
-    <div class="contentListTools">        
-        <button on:click={() => { showNew = true }}>
-            <i class="fa fa-plus-square" aria-hidden="true"></i>
-            New Item
-        </button>
+    <div class="contentListTools">                
+        <NewItemButton action={() => { showNew = true }}>New Item</NewItemButton>
         <ContentFilter filterAction={filterItems} searchAction={searchItems} activeType={filterType} />
     </div>
-    <!-- {#await contentStore}
-    <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
-    {:then itemList}         
-        {#each itemList as item}
-        <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>        
-        {/each}
-    {/await} -->
     {#await loadingContent}
-        <h1>LOADING CONTENT</h1>
-    {:then loadingDone} 
-        content done
+        <Loader />
     {/await}
+    {#if $contentStore.dirty}
+        <DataUpdateIndicator />
+    {/if}
+    <div class="errors">
+        {#each $contentStore.errors as error}
+            <ErrorItem {error}></ErrorItem>
+        {/each}
+    </div>
     {#each $contentStore.items as item}
-    <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>
-    {/each}
-
+    <ContentItem {item} deleteItem={handleDeleteItem}></ContentItem>
+    {/each}    
 </div>
 
 {#if showNew}
+<!-- this could be wrapped in a component for cleanliness - ContentNewItemForm -->
     <FormModal formHandler={handleNewItem} close={()=>{ showNew = false }}>
         <label for="title">Title</label>
         <input type="text" name="title" />
@@ -95,3 +104,10 @@
         </select>
     </FormModal>
 {/if}
+
+
+<style>
+    .contentList .errors {
+        color: red;
+    }
+</style>

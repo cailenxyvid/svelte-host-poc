@@ -13,8 +13,5 @@
     .loader {
         font-size: xx-large;
         color: #333;
-        top: 45%;
-        left: 45%;
-        position: absolute;
     }
 </style>

@@ -16,12 +16,11 @@
     // local vars
     let activeEvent = params.id    
     let eventPromise 
-    let contentPromise 
 
     // subscribe to DB changes, results will reload corresponding promises
     supabase
-    .channel('public:countries:id=eq.'+activeEvent)
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'event' }, payload => {    
+    .channel('public:event:id=eq.'+activeEvent)
+    .on('postgres_changes', { event: 'update', schema: 'public', table: 'event' }, payload => {    
         eventPromise = payload.new    
     })
     .subscribe()
@@ -64,7 +63,6 @@
     //# this might change entirely with state management anyway
     $: if (activeEvent = params.id) {        
         eventPromise = loadEvent(activeEvent);
-        contentPromise = loadContent(activeEvent);
     }
 
 </script>
@@ -74,7 +72,7 @@
     <Loader text="Loading Event {params.id}" />
 {:then event} 
     {#if event}
-        <Host {event} {contentPromise} {toggleGoLive} {setViewState} resetContentItems={() => { contentPromise = loadContent(params.id) }} />
+        <Host {event} {toggleGoLive} {setViewState} />
     {:else}
         <h1>Event not found</h1>
     {/if}
