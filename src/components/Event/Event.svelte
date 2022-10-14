@@ -7,6 +7,7 @@
     import { loadEvent, loadContent } from "../../db/mockAPI"
 
     // import components
+    import Loader from '../shared/Loader.svelte'
     import Host from "./Host/Host.svelte"
     
     // router params
@@ -25,13 +26,13 @@
     })
     .subscribe()
 
-    supabase
-    .channel('public:conten:event=eq.'+activeEvent)
-    .on('postgres_changes', { event: '*', schema: 'public', table: 'content' }, payload => {    
-        // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead
-        contentPromise = loadContent(activeEvent);
-    })
-    .subscribe()  
+    // supabase
+    // .channel('public:conten:event=eq.'+activeEvent)
+    // .on('postgres_changes', { event: '*', schema: 'public', table: 'content' }, payload => {    
+    //     // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead
+    //     contentPromise = loadContent(activeEvent);
+    // })
+    // .subscribe()  
 
      //# these actions could go into a lib for cleanliness 
     let toggleGoLive = async () => {
@@ -67,10 +68,10 @@
     }
 
 </script>
-<h1>hello from Event {params.id}</h1>
+<!-- <h1>hello from Event {params.id}</h1> -->
 
 {#await eventPromise}
-    <h1>loading event</h1>
+    <Loader text="Loading Event {params.id}" />
 {:then event} 
     {#if event}
         <Host {event} {contentPromise} {toggleGoLive} {setViewState} resetContentItems={() => { contentPromise = loadContent(params.id) }} />

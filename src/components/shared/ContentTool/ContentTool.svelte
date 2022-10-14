@@ -2,6 +2,9 @@
     // import utilities 
     import { newContentItem, deleteContentItem } from "../../../db/mockAPI";
 
+    // import store
+    import { loadStore, contentStore } from "../../../db/stores/contentState";
+
     // import components
     import FormModal from "../FormModal.svelte";
     import ContentItem from "./ContentItem.svelte";
@@ -11,6 +14,9 @@
     export let items;
     export let reloadItems;
     export let activeEvent; //# should probably be using context API for this
+
+    // data/state
+    let loadingContent = loadStore(activeEvent);
 
     // local props
     let showNew = false;
@@ -27,7 +33,8 @@
             event_id: activeEvent
         }
 
-        newContentItem(newItem);
+        // newContentItem(newItem);
+        ;(await contentStore).addItem(newItem)
         showNew = false;
     }
 
@@ -56,13 +63,21 @@
         </button>
         <ContentFilter filterAction={filterItems} searchAction={searchItems} activeType={filterType} />
     </div>
-    {#await items}
+    <!-- {#await contentStore}
     <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
     {:then itemList}         
         {#each itemList as item}
         <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>        
         {/each}
+    {/await} -->
+    {#await loadingContent}
+        <h1>LOADING CONTENT</h1>
+    {:then loadingDone} 
+        content done
     {/await}
+    {#each $contentStore.items as item}
+    <ContentItem {item} deleteItem={deleteContentItem}></ContentItem>
+    {/each}
 
 </div>
 
