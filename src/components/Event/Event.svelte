@@ -25,37 +25,29 @@
     })
     .subscribe()
 
-    // supabase
-    // .channel('public:conten:event=eq.'+activeEvent)
-    // .on('postgres_changes', { event: '*', schema: 'public', table: 'content' }, payload => {    
-    //     // supabase sends back granular results on trigger, so payload will only contain the row changed. Refresh list instead
-    //     contentPromise = loadContent(activeEvent);
-    // })
-    // .subscribe()  
-
      //# these actions could go into a lib for cleanliness 
     let toggleGoLive = async () => {
-    let event = await eventPromise;
+        let event = await eventPromise;
 
-    const { data, error } = await supabase
-    .from('event')
-    .update({ live: !event.live })
-    .match({ id: activeEvent })
+        const { data, error } = await supabase
+        .from('event')
+        .update({ live: !event.live })
+        .match({ id: activeEvent })
 
-    if (error) throw error
+        if (error) throw error
 
-    // no further action required since the DB subscription takes over
+        // no further action required since the DB subscription takes over
     }
 
     let setViewState = async (vs) => {  
-    const { data, error } = await supabase
-    .from('event')
-    .update({ viewstate: vs })
-    .match({ id: activeEvent })
+        const { data, error } = await supabase
+        .from('event')
+        .update({ viewstate: vs })
+        .match({ id: activeEvent })
 
-    if (error) throw error
+        if (error) throw error
 
-    return data; // we don't need the data (because of subscription), but this returns a promise we can await on 
+        return data; // we don't need the data (because of subscription), but this returns a promise we can await on 
     }
     
     // load the initial data
@@ -66,7 +58,6 @@
     }
 
 </script>
-<!-- <h1>hello from Event {params.id}</h1> -->
 
 {#await eventPromise}
     <Loader text="Loading Event {params.id}" />

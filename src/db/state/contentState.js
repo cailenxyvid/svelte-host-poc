@@ -50,9 +50,11 @@ const addItem = (item) => {
 
 const deleteItem = (id) => {
     //# do some validation / permissions etc 
-    let t = deleteContentItem(id).catch(handleError)
+    deleteContentItem(id).catch(handleError)
 }
 
+//# i would like to make this reusable and move it to a utility lib, 
+// but i also like the idea of keeping scoped errors so they can be handled/displayed per component instead of just globally
 const handleError = (error) => {
     console.error(error)
     store.update(store => {

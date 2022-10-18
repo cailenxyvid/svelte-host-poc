@@ -1,6 +1,6 @@
 <script>
     // import store
-    import { loadStore, contentStore } from "../../../db/stores/contentState";
+    import { loadStore, contentStore } from "../../../db/state/contentState";
 
     // import components
     import FormModal from "../FormModal.svelte";

@@ -3,12 +3,12 @@
   import Router from 'svelte-spa-router'
 
   // import top level components/views (routes)
-  import Home from "./components/Home/Home.svelte"
+  import Dashboard from "./components/Dashboard/Dashboard.svelte"
   import Event from './components/Event/Event.svelte'
 
   // declare routes 
   const routes = {
-    '/': Home,
+    '/': Dashboard,
     '/event/:id': Event
 }
 

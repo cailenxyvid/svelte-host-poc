@@ -2,7 +2,7 @@ import { supabase } from "./supabaseClient";
 
 export const newContentItem = async (item) => {
     const { data, error } = await supabase
-        .from('contevnt')
+        .from('content')
         .insert([
             { title: item.title, event_id: item.event_id }
         ])
@@ -39,6 +39,16 @@ export const updateContentItem = async (item) => {
         console.error("Error updating content item", error)
         throw new Error("Unable to update content item ("+item.title+")!")        
     }
+
+    return data;
+}
+
+export let loadEvents = async () => {
+    const { data, error } = await supabase
+    .from('event')
+    .select()
+
+    if (error) return error;
 
     return data;
 }
