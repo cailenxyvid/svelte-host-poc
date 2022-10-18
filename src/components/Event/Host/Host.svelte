@@ -23,7 +23,7 @@
 
 <div transition:fade class="view host">
     <ShowFlowNav live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
-    <h1>Host View New: {event.title}</h1>
+    <h1>{event.title}</h1>
 
     {#if $openPanels.showFlowEditor}
         <ShowFlowEditor />

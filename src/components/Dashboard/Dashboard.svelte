@@ -1,16 +1,21 @@
 <script>
     import { loadEvents } from "../../db/mockAPI"
-  import DataUpdateIndicator from "../shared/DataUpdateIndicator.svelte";
 
     import InfoModal from "../shared/InfoModal.svelte"
     import Loader from "../shared/Loader.svelte"
 
     import DashboardEventList from "./components/DashboardEventList.svelte"
+    import PreviewEvent from "./components/PreviewEvent.svelte"
 
-    let previewEvent = (event_id) => {
-        //#
+    let previewEvent = async (event_id) => {
+        let events = await eventsPromise
+        console.log(eventsPromise)
+        
+        selectedEvent = events.find(event => event.id == event_id)
+        showInfoModal = true
     }
 
+    let selectedEvent // for event preview
     let showInfoModal = false
     let eventsPromise = loadEvents() //# this should run through state management instead of directly loading
 </script>
@@ -20,12 +25,14 @@
 <h3>In the meantime, here's a reusable Event List with context specific view action</h3>
 
 {#await eventsPromise}
-    <Loader />
+<Loader />
 {:then events} 
 <DashboardEventList {events} {previewEvent} />
 {/await}
 
 
 {#if showInfoModal}
-<InfoModal close={()=>{ showInfoModal = false }}>Pre/view Event component</InfoModal>
+<InfoModal close={()=>{ showInfoModal = false }}>
+    <PreviewEvent event={selectedEvent} />
+</InfoModal>
 {/if}

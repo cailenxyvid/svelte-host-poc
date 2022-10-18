@@ -48,7 +48,7 @@ export let loadEvents = async () => {
     .from('event')
     .select()
 
-    if (error) return error;
+    if (error) throw error;
 
     return data;
 }
