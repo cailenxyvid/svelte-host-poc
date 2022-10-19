@@ -10,6 +10,8 @@
     import Loader from '../shared/Loader.svelte'
     import Host from "./Host/Host.svelte"
     import Settings from './Settings/Settings.svelte'
+    import Archive from './Archive/Archive.svelte'
+    import Reporting from './Reporting/Reporting.svelte'
     import EventNavigation from './EventNavigation.svelte'
     import EventMenu from './EventMenu.svelte'
     import EventFooter from './EventFooter.svelte'
@@ -63,14 +65,33 @@
 
         return data; // we don't need the data (because of subscription), but this returns a promise we can await on 
     }
-    
+
+    // view management experiment
+    let views = {
+        Host: {
+            component: Host,
+            props: { toggleGoLive, setViewState}
+        },
+        Settings: {
+            component: Settings,
+            props: {}
+        },
+        Archive: {
+            component: Archive,
+            props: {}
+        },
+        Reporting: {
+            component: Reporting,
+            props: {}
+        }
+    }
+
     // load the initial data
     //# reactive statement used to update component when route params change. could use {#key} instead. or another pattern?
     //# this might change entirely with state management anyway
     $: if (activeEvent = params.id) {        
         eventPromise = loadEvent(activeEvent);
     }
-
 </script>
 
 
@@ -81,14 +102,17 @@
     {#if event}
         <EventNavigation {event} {activeView} {menuOpen} {setActiveView} {toggleMenu}></EventNavigation>
         <!-- do we want dynamic component loading here? svelte:component syntax -->
-        {#if activeView == 'Host'}
-        <Host {event} {toggleGoLive} {setViewState} />
+        <!-- {#if activeView == 'Host'}
+        <Host {event} {...testSpreadActions} />
         {/if}
         {#if activeView == 'Settings'}
         <Settings {event}  />
+        {/if} -->
+        {#if activeView}
+            <svelte:component this={views[activeView].component} {event} {...views[activeView].props} />
         {/if}
         {#if menuOpen}
-            <EventMenu {event}></EventMenu>
+            <EventMenu {event} {setActiveView}></EventMenu>
         {/if}
         <EventFooter />
     {:else}

@@ -1,15 +1,16 @@
 <script>
     export let event
+    export let setActiveView
 </script>
 
 <ul>
     <li>
         Viewer
     </li>
-    <li>
+    <li on:click={() => { setActiveView('Reporting') }}>
         Reporting
     </li>
-    <li>
+    <li on:click={() => { setActiveView('Archive') }}>
         Archiving
     </li>
     <li>
