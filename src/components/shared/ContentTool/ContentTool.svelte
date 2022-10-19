@@ -90,7 +90,7 @@
 </div>
 
 {#if showNew}
-<!-- this could be wrapped in a component for cleanliness - ContentNewItemForm -->
+<!-- the internal form elements could be moved to a component for cleanliness - ContentNewItemForm -->
     <FormModal formHandler={handleNewItem} close={()=>{ showNew = false }}>
         <label for="title">Title</label>
         <input type="text" name="title" />
