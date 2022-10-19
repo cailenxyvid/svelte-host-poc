@@ -4,7 +4,7 @@
 
     // import utilities     
     import { supabase } from "../../db/supabaseClient"
-    import { loadEvent, loadContent } from "../../db/mockAPI"
+    import { loadEvent } from "../../db/mockAPI"
 
     // import components
     import Loader from '../shared/Loader.svelte'
@@ -90,31 +90,10 @@
         {#if menuOpen}
             <EventMenu {event}></EventMenu>
         {/if}
+        <EventFooter />
     {:else}
         <h1>Event not found</h1>
     {/if}
 {:catch error}
     <p style="color: red">{error.message}</p>    
 {/await}  
-
-
-top left
-icon indicators (status dashboard)
-    Room Open
-    Recording
-    Encoder status (dash widget)
-top nav (right?)
-big present icon
-medium settings icon
-hamburger menu (expand into static (no hover, click to toggle) sidebar)
-    Viewer
-    Reporting
-    Archiving
-    Event Actions
-        Duplicate
-        Delete
-data loading widget
-
-footer
-bottom left - messaging centers (moderation, tech support) as expandable tabs
-infographic for the rest of the footer (attendees, engagement numbers, etc)

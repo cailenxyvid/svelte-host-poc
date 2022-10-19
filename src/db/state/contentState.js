@@ -3,7 +3,7 @@
 
 import { writable } from 'svelte/store'
 import { supabase } from "../supabaseClient"
-import { loadContent, newContentItem, deleteContentItem } from "../mockAPI"
+import { loadContent, newContentItem, deleteContentItem, updateContentItem } from "../mockAPI"
 
 const store = writable({
     dirty: true,
@@ -13,7 +13,13 @@ const store = writable({
 })
 
 export const loadStore = async (event_id) => {
-    let items = await loadContent(event_id)
+    let items
+    try {
+        items = await loadContent(event_id)
+    } catch (error) {
+        handleError(error.message)
+    }
+    
     
     store.update(store => {
         store.dirty = false
@@ -53,6 +59,10 @@ const deleteItem = (id) => {
     deleteContentItem(id).catch(handleError)
 }
 
+const updateItem = (item) => {
+    updateContentItem(item).catch(handleError)
+}
+
 //# i would like to make this reusable and move it to a utility lib, 
 // but i also like the idea of keeping scoped errors so they can be handled/displayed per component instead of just globally
 const handleError = (error) => {
@@ -68,12 +78,13 @@ const handleError = (error) => {
             store.errors = [...store.errors.slice(1,store.errors.length)]
             return store
         })  
-    }, 5000)
+    }, 9000)
 }
 
 export const contentStore = {
     subscribe: store.subscribe,
     set: store.set,
     addItem: addItem,
-    deleteItem: deleteItem
+    deleteItem: deleteItem,
+    updateItem: updateItem
 }

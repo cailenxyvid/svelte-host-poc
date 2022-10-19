@@ -1,5 +1,6 @@
 import { supabase } from "./supabaseClient";
 
+// ******** content
 export const newContentItem = async (item) => {
     const { data, error } = await supabase
         .from('content')
@@ -43,6 +44,20 @@ export const updateContentItem = async (item) => {
     return data;
 }
 
+export let loadContent = async (event_id) => {
+    const { data, error } = await supabase
+    .from('content')
+    .select()
+    .eq('event_id', event_id)
+    .order('id', { ascending: true })
+    
+  
+    if (error) throw error;
+  
+    return data;
+  }
+
+// ******** events / event
 export let loadEvents = async () => {
     const { data, error } = await supabase
     .from('event')
@@ -64,15 +79,16 @@ export let loadEvent = async (event_id) => {
     return data[0];
   }
   
-  export let loadContent = async (event_id) => {
+  export const updateEvent = async (event) => {
     const { data, error } = await supabase
-    .from('content')
-    .select()
-    .eq('event_id', event_id)
-    .order('id', { ascending: true })
-    
-  
-    if (error) throw error;
-  
+        .from('event')
+        .update(event)
+        .match({ id: event.id })
+
+    if (error) {
+        console.error("Error updating content item", error)
+        throw new Error("Unable to update event ("+event.title+")!")        
+    }
+
     return data;
-  }
+}  

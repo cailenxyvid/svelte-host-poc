@@ -11,6 +11,7 @@
 
 <div id="EventNavigation">
     <EventStatusWidget {event}></EventStatusWidget>
+    <div class="title">{event.title}</div>
     <div class="actions">
         <i on:click={()=>{ setActiveView('Host') }} class="fa fa-2x fa-video-camera {activeView == 'Host' ? 'active' : '' }" aria-hidden="true"></i>
         <i on:click={()=>{ setActiveView('Settings') }} class="fa fa-cog {activeView == 'Settings' ? 'active' : ''}" aria-hidden="true"></i>

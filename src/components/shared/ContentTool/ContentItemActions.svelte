@@ -3,6 +3,7 @@
     import ContentItemActionIcon from "./ContentItemActionIcon.svelte"
 
     export let deleteItem
+    export let toggleEdit
     
     export let item
 
@@ -14,5 +15,6 @@
 
 <div class="actions">
     <ContentItemActionIcon action={setActive} icon="play" />
+    <ContentItemActionIcon action={toggleEdit} icon="pencil" />
     <ContentItemActionIcon action={ () => { deleteItem(item.id) } } icon="trash" />
 </div>

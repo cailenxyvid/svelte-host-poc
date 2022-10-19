@@ -27,7 +27,7 @@
         return loadingContent = loadStore(activeEvent)
     }
     
-    let handleNewItem = async (event) => {
+    let newItem = async (event) => {
         const formData = new FormData(event.target)
         
         let newItem = {
@@ -40,9 +40,17 @@
         showNew = false;
     }
 
-    let handleDeleteItem = (id) => {
+    let deleteItem = (id) => {
         try {
             contentStore.deleteItem(id)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+    let updateItem = (item) => {
+        try {
+            contentStore.updateItem(item)
         } catch (error) {
             console.error(error)
         }
@@ -85,13 +93,13 @@
         {/each}
     </div>
     {#each $contentStore.items as item}
-    <ContentItem {item} deleteItem={handleDeleteItem}></ContentItem>
+    <ContentItem {item} {deleteItem} {updateItem}></ContentItem>
     {/each}    
 </div>
 
 {#if showNew}
 <!-- the internal form elements could be moved to a component for cleanliness - ContentNewItemForm -->
-    <FormModal formHandler={handleNewItem} close={()=>{ showNew = false }}>
+    <FormModal formHandler={newItem} close={()=>{ showNew = false }}>
         <label for="title">Title</label>
         <input type="text" name="title" />
 
