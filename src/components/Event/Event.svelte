@@ -101,13 +101,7 @@
 {:then event} 
     {#if event}
         <EventNavigation {event} {activeView} {menuOpen} {setActiveView} {toggleMenu}></EventNavigation>
-        <!-- do we want dynamic component loading here? svelte:component syntax -->
-        <!-- {#if activeView == 'Host'}
-        <Host {event} {...testSpreadActions} />
-        {/if}
-        {#if activeView == 'Settings'}
-        <Settings {event}  />
-        {/if} -->
+        <!-- Main View Component -->
         {#if activeView}
             <svelte:component this={views[activeView].component} {event} {...views[activeView].props} />
         {/if}

@@ -7,9 +7,10 @@
     import { openPanels } from '../../../db/stores'
 
     // import components
-    import ShowFlowNav from "./ShowFlow/ShowFlow.svelte"
-    import ShowFlowEditor from './ShowFlow/ShowFlowEditor.svelte'
+    import ShowFlow from "./ShowFlow/ShowFlow.svelte"    
     import ContentTool from "../../shared/ContentTool/ContentTool.svelte"
+    import HostNavigation from './HostNavigation.svelte'
+  
     
 
     // action (event) handlers
@@ -18,15 +19,28 @@
 
     // component props
     export let event
+
+    // local state
+    let panels = {
+        ContentTool: false,
+        ShowFlow: false
+    }
+
+    // local actions
+    let togglePanel = panel => {
+        panels[panel] = !panels[panel]
+    }
     
 </script>
 
 <div transition:fade class="view host">
-    <ShowFlowNav live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
-    <h1>{event.title}</h1>
+    <HostNavigation {togglePanel}></HostNavigation>
 
-    {#if $openPanels.showFlowEditor}
-        <ShowFlowEditor />
+    {#if panels.ShowFlow}
+    <ShowFlow live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
     {/if}
+
+    {#if panels.ContentTool}
     <ContentTool activeEvent={event.id}></ContentTool>
+    {/if}
 </div>
