@@ -8,10 +8,3 @@
     <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
     {text}
 </div>
-
-<style>
-    .loader {
-        font-size: xx-large;
-        color: #333;
-    }
-</style>
