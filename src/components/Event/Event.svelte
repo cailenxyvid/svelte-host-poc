@@ -34,12 +34,12 @@
     .subscribe()
 
      //# these actions could go into a lib for cleanliness 
-     let toggleMenu = () => {
-        menuOpen = !menuOpen
-     }
-
      let setActiveView = (view) => {
         activeView = view
+     }
+
+     let toggleMenu = () => {
+        menuOpen = !menuOpen
      }
 
     let toggleGoLive = async () => {
@@ -95,23 +95,34 @@
 </script>
 
 
-
+<div id="EventScreen" class="h-screen">
 {#await eventPromise}
     <Loader text="Loading Event {params.id}" />
 {:then event} 
     {#if event}
-        <EventNavigation {event} {activeView} {menuOpen} {setActiveView} {toggleMenu}></EventNavigation>
-        <!-- Main View Component -->
-        {#if activeView}
-            <svelte:component this={views[activeView].component} {event} {...views[activeView].props} />
-        {/if}
-        {#if menuOpen}
-            <EventMenu {event} {setActiveView}></EventMenu>
-        {/if}
+        <EventNavigation {event} {activeView} {setActiveView}></EventNavigation>
+                
+        <!-- Event Main menu + primary view section -->
+        <section id="EventView" class="h-4/5">
+            <div class="container flex flex-row border h-full">
+                
+                <div class="flex flex-col relative bg-emerald-800 text-white duration-300 p-3 {menuOpen ? 'w-48' : 'w-10'}">
+                    <EventMenu {menuOpen} {setActiveView} {toggleMenu}></EventMenu>
+                </div>            
+               
+                {#if activeView}
+                    <div class="flex flex-col flex-auto w-64 p-10">
+                        <svelte:component this={views[activeView].component} {event} {...views[activeView].props} />
+                    </div>                                            
+                {/if}               
+            </div>    
+        </section>
+    
         <EventFooter />
     {:else}
         <h1>Event not found</h1>
     {/if}
 {:catch error}
     <p style="color: red">{error.message}</p>    
-{/await}  
+{/await}      
+</div>

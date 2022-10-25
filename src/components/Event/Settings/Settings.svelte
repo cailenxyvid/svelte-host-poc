@@ -12,18 +12,18 @@
     }
 </script>
 
-<h1>Settings</h1>
+<h1 class="text-xl">Settings</h1>
 {#await savePromise}
     <Loader />
 {:then saveResult}
     <form on:submit|preventDefault={saveChanges}>
         <label for="title">Title</label>
-        <input name="title" bind:value={event.title} />
+        <input name="title" class="border" bind:value={event.title} />
 
         <label for="event_date">Event Date</label>
-        <input type="date" name="event_date" bind:value={event.event_date} />
+        <input type="date" name="event_date" class="border" bind:value={event.event_date} />
 
-        <button type="submit">Save</button>
+        <button type="submit" class="bg-xyvid-green text-white rounded-sm p-1">Save</button>
     </form>
 {:catch error}
     Error: {error}

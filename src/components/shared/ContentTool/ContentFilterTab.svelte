@@ -5,4 +5,4 @@
     export let label
 </script>
 
-<span on:click={() => { filterAction(type) }} class="contentTypeTab {activeType == type ? 'active' : ''}">{label}</span>
+<span on:click={() => { filterAction(type) }} class="p-1 {activeType == type ? 'bg-slate-200' : ''}">{label}</span>

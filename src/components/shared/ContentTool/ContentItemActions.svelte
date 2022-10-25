@@ -13,7 +13,7 @@
     }
 </script>
 
-<div class="actions">
+<div class="actions text-right">
     <ContentItemActionIcon action={setActive} icon="play" />
     <ContentItemActionIcon action={toggleEdit} icon="pencil" />
     <ContentItemActionIcon action={ () => { deleteItem(item.id) } } icon="trash" />

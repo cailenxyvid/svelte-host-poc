@@ -76,8 +76,8 @@
     }
 </script>
 
-<div class="contentList">    
-    <div class="contentListTools">                
+<div id="ContentTool" class="mt-6 p-1 h-full border bg-slate-50 rounded-md">    
+    <div class="contentFilterTools bg-slate-400 p-4 pb-0 rounded-md w-full text-sm">                
         <NewItemButton action={() => { showNew = true }}>New Item</NewItemButton>
         <ContentFilter filterAction={filterItems} searchAction={searchItems} activeType={filterType} />
     </div>
@@ -92,9 +92,11 @@
             <ErrorItem {error}></ErrorItem>
         {/each}
     </div>
-    {#each $contentStore.items as item}
-    <ContentItem {item} {deleteItem} {updateItem}></ContentItem>
-    {/each}    
+    <div id="ContentItems" class="overflow-y-auto h-4/5">
+        {#each $contentStore.items as item}
+        <ContentItem {item} {deleteItem} {updateItem}></ContentItem>
+        {/each}    
+    </div>    
 </div>
 
 {#if showNew}
@@ -112,10 +114,3 @@
         </select>
     </FormModal>
 {/if}
-
-
-<style>
-    .contentList .errors {
-        color: red;
-    }
-</style>
