@@ -33,14 +33,25 @@
     
 </script>
 
-<div transition:fade class="view host">
-    <HostNavigation {togglePanel}></HostNavigation>
+<div transition:fade class="relative h-4/5">
+    <div class="absolute -right-0 -top-5">
+        <HostNavigation {togglePanel} {panels}></HostNavigation>
+    </div>
 
-    {#if panels.ShowFlow}
-    <ShowFlow live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
-    {/if}
+    <!-- grid container/template -->
+    <div class="grid grid-rows-host grid-cols-4 gap-4">
+        {#if panels.ShowFlow}
+        <div class="col-span-3">
+            <ShowFlow live={event.live} currentState={event.viewstate} {toggleGoLive} {setViewState} />
+        </div>        
+        {/if}
 
-    {#if panels.ContentTool}
-    <ContentTool activeEvent={event.id}></ContentTool>
-    {/if}
+        {#if panels.ContentTool}
+        <div class="row-span-3 row-start-1 col-start-4">
+            <ContentTool activeEvent={event.id}></ContentTool>
+        </div>        
+        {/if}
+
+        <div class="row-start-2"><h1>Slidedeck?</h1></div>
+    </div>    
 </div>

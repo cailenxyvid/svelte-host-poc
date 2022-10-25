@@ -20,14 +20,18 @@
     let eventsPromise = loadEvents() //# this should run through state management instead of directly loading
 </script>
 
-<h1>Dashboard</h1>
-<h2>Here we could have a fancy, customizable grid based dashboard</h2>
-<h3>In the meantime, here's a reusable Event List with context specific view action</h3>
-
+<div class="grid h-screen place-items-center">
+    <div>
+        <h1 class="text-5xl">Dashboard</h1>
+        <h2>Here we could have a fancy, customizable grid based dashboard</h2>
+        <h3>In the meantime, here's a reusable Event List with context specific view action</h3>
+    </div>
 {#await eventsPromise}
 <Loader />
 {:then events} 
+<div class="bg-slate-400">
 <DashboardEventList {events} {previewEvent} />
+</div>
 {/await}
 
 
@@ -36,3 +40,4 @@
     <PreviewEvent event={selectedEvent} />
 </InfoModal>
 {/if}
+</div>

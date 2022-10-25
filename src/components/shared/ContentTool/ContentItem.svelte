@@ -21,20 +21,20 @@
     let edit = false
 </script>
 
-<li transition:fly={{ duration: 800}} class="contentItem {item.active ? 'active' : ''}">
+<div transition:fly={{ duration: 800}} class="contentItem mt-2 p-2 {item.active ? 'bg-slate-600 text-white' : ''}">
     {#if edit}
         <form on:submit|preventDefault={() => { 
             updateItem(item) 
             toggleEdit()
             }}>
             <label for="title">Title</label>
-            <input name="title" bind:value={item.title} />
+            <input name="title" class="text-black w-2/4" bind:value={item.title} />
 
-            <button type="submit">Save</button>
+            <button type="submit" class="bg-emerald-600 rounded-md p-1">Save</button>
         </form>
     {:else}
-        <b>{item.id}</b> <span>{item.title}</span>
+        <span>{item.title}</span>
     {/if}
     <ContentItemActions {item} {deleteItem} {toggleEdit}></ContentItemActions>
-    {item.active} {item.sort}
-</li>
+    <!-- {item.active} {item.sort} -->
+    </div>

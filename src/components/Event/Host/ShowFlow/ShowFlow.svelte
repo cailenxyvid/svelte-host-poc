@@ -17,7 +17,7 @@
     let showFlowEditor = false
 </script>
 
-<div class="showflowNav">    
+<div class="bg-gray-300">    
     <AsyncButton action={toggleGoLive} active={live} classes="goLiveButton">Go live</AsyncButton>
     <ShowFlowButton state="vS" {currentState} {setViewState} />
     <ShowFlowButton state="Sv" {currentState} {setViewState} />
@@ -28,6 +28,12 @@
     <ShowFlowButton state="V" {currentState} {setViewState} />
     <ShowFlowButton state="S" {currentState} {setViewState} />
 
-    <ToggleButton toggle={() => { showFlowEditor = !showFlowEditor }} icon="th-large"></ToggleButton>
-    {#if showFlowEditor}<ShowFlowEditorDrawer></ShowFlowEditorDrawer>{/if}
+    <span class="relative">
+        <ToggleButton toggle={() => { showFlowEditor = !showFlowEditor }} icon="th-large"></ToggleButton>
+        {#if showFlowEditor}
+        <span class="absolute right-0 top-5 bg-slate-500 p-1">
+            <ShowFlowEditorDrawer></ShowFlowEditorDrawer>
+        </span>
+        {/if}
+    </span>    
 </div>

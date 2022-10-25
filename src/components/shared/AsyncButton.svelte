@@ -20,7 +20,7 @@
     export let classes = "";
 </script>
 
-<button on:click={(e) => { promise = handleClick(e)}} class="{classes} {active ? 'active' : ''}">
+<button on:click={(e) => { promise = handleClick(e)}} class="{classes} {active ? 'bg-slate-500' : 'bg-slate-400'} w-14">
     {#await promise}
         <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
     {:then p} 
