@@ -101,16 +101,18 @@
 
 {#if showNew}
 <!-- the internal form elements could be moved to a component for cleanliness - ContentNewItemForm -->
+<div class="absolute top-0 left-1/3 p-5 bg-slate-400 grid h-1/4 place-items-center">
     <FormModal formHandler={newItem} close={()=>{ showNew = false }}>
         <label for="title">Title</label>
-        <input type="text" name="title" />
+        <input type="text" name="title" class="border" />
 
         <label for="type">Type</label>
-        <select name="type">
+        <select name="type" class="border">
             <option value="word">Word Document</option>
             <option value="slidedeck">Slidedeck</option>
             <option value="quiz">Quiz</option>
             <option value="poll">Poll</option>
         </select>
     </FormModal>
+</div>    
 {/if}
